@@ -3,18 +3,18 @@ const Jedis = require('./jedis-model');
 
 const { validateId, validateName } = require('./jedis-middleware');
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     Jedis.getAll()
     .then(jedis => {
-        res.json(jedis)
+        res.status(200).json(jedis)
     })
     .catch(err => {
-        next(err)
+        res.status(500).json(err)
     })
 })
 
 
-router.get('/:id', validateId, (req, res, next) => {
+router.get('/:id', validateId, (req, res) => {
     res.json(req.jediId)
 })
 
